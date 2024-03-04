@@ -29,25 +29,41 @@ class Sistema:    #Clase o molde
         self.__lista_pacientes = [] #En esta lista se guardan los pacientes 
         
     def verificarPaciente(self,cedula): #Se verifica que este el paciente pidiendo su documento y haciendo un ciclo 
-        for p in self.__lista_pacientes:
-            if cedula == p.verCedula():
-                return True 
-        return False
+        if cedula != '' :
+            for p in self.__lista_pacientes:
+                if cedula == p.verCedula():
+                    return True 
+            return False
+        elif cedula == '' :
+            for p in self.__lista_pacientes:
+                if cedula == p.verNombre():
+                    return True
+            return False 
         
     def ingresarPaciente(self,pac):
         self.__lista_pacientes.append(pac) #Se agrega el paciente a la lista 
         return True
     
     def verDatosPaciente(self, c):
-        if self.verificarPaciente(c) == False:
-            return None
-        for p in self.__lista_pacientes:
-            #retorne la cedula y la comparo con la ingresada por teclado
-            if c == p.verCedula():
-                return p #si encuentro el paciente lo retorno
-            
+        if c != '' :
+            if self.verificarPaciente(c) == False: #polimorfismo 
+                return None
+            for p in self.__lista_pacientes: #Busca en la lista de pacientes 
+                #retorne la cedula y la comparo con la ingresada por teclado
+                if c == p.verCedula(): #polimorfismo
+                    return p #si encuentro el paciente lo retorno
+        elif c == '' :
+            if self.verificarPaciente(c) == False: #polimorfismo 
+                return None
+            for p in self.__lista_pacientes: #Busca en la lista de pacientes 
+                #retorne la cedula y la comparo con la ingresada por teclado
+                if c == p.verNombre(): #polimorfismo
+                    return p #si encuentro el paciente lo retorno
+        
+                
     def verNumeroPacientes(self):
         print("En el sistema hay: " + str(len(self.__lista_pacientes)) + " pacientes") 
+    
 
 def main():
     sis = Sistema() 
@@ -72,7 +88,7 @@ def main():
                 pac.asignarGenero(input("Ingrese el genero: ")) 
                 pac.asignarServicio(input("Ingrese servicio: ")) 
                 #3. se almacena en la lista que esta dentro de la clase sistema
-                r = sis.ingresarPaciente(pac)             
+                r = sis.ingresarPaciente(pac)     #Polimorfismo         
                 if r:
                     print("Paciente ingresado") 
                 else:
@@ -82,7 +98,7 @@ def main():
             c = int(input("Ingrese la cedula a buscar: ")) 
             #le pido al sistema que me devuelva en la variable p al paciente que tenga
             #la cedula c en la lista
-            p = sis.verDatosPaciente(c) 
+            p = sis.verDatosPaciente(c) #Polimorfismo 
             #2. si encuentro al paciente imprimo los datos
             if p != None:
                 print("Nombre: " + p.verNombre()) 
