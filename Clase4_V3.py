@@ -81,7 +81,7 @@ def main():
                 print("\n<< Ya existe un paciente con esa cedula >>".upper()) 
             else:    
                 # 2. se crea un objeto Paciente
-                pac = Paciente() 
+                pac = Paciente() #Herencia 
                 # como el paciente esta vacio debo ingresarle la informacion
                 pac.asignarNombre(input("Ingrese el nombre: ")) 
                 pac.asignarCedula(cedula) 

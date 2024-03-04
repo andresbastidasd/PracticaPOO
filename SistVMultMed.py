@@ -66,7 +66,7 @@ class sistemaV:
     #Verifica si existe el medicamento 
     def verificarExisteM(self,nombreM): #Métodos get
         med = Mascota() 
-        for n in med.__lista_medicamentos: #Polimorfismo 
+        for n in med.__lista_medicamentos: 
             if nombreM == n.verLista_Medicamentos():
                 return True
         return False 
