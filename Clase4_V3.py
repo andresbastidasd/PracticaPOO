@@ -70,7 +70,7 @@ def main():
     #probemos lo que llevamos programado
     while True:
         #Menú
-        opcion = int(input("\nIngrese \n0 para salir, \n1 para ingresar nuevo paciente, \n2 ver Paciente\n\t--> ")) 
+        opcion = int(input("\nIngrese \n0 para salir, \n1 para ingresar nuevo paciente, \n2 ver Paciente \n3 Ver número de pacientes\n\t--> ")) 
         
         if opcion == 1:
             #ingreso pacientes
@@ -107,6 +107,10 @@ def main():
                 print("Servicio: " + p.verServicio()) 
             else:
                 print("No existe un paciente con esa cedula") 
+        elif opcion == 3:
+            p = sis.verNumeroPacientes()
+            print(p)
+
         elif opcion !=0:
             continue 
         else:
