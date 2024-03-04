@@ -1,3 +1,4 @@
+import datetime #Importo datetime para usar fechas 
 class Medicamento:
     def __init__(self):
         self.__nombre = "" 
@@ -17,6 +18,8 @@ class Medicamento:
         
 class Mascota:
     def __init__(self):
+        self.__canino = {} #Se guarda en diccionario solo caninos
+        self.__felino = {} #Se guarda en diccionario solo felinos
         self.__nombre= " "
         self.__historia=0
         self.__tipo=" "
@@ -25,6 +28,11 @@ class Mascota:
         self.__lista_medicamentos=[]
 
     #Métodos get   
+            
+    def verCanino(self,c):
+        return self.__canino.get(c)
+    def verFelino(self,f):
+        return self.__felino.get(f)
     def verNombre(self):
         return self.__nombre
     def verHistoria(self):
@@ -39,6 +47,10 @@ class Mascota:
         return self.__lista_medicamentos 
 
     #Métodos set      
+    def asignarCanino(self,n):
+        self.__canino[n.verFecha()]=n
+    def asignarFelino(self,n):
+        self.__felino[n.verFecha()]=n
     def asignarNombre(self,n):
         self.__nombre=n
     def asignarHistoria(self,nh):
@@ -54,7 +66,7 @@ class Mascota:
     
 class sistemaV:
     def __init__(self):
-        self.__lista_mascotas = []
+        self.verFecha = datetime.datetime.now().strftime("%x")
     
     def verificarExiste(self,historia): #Métodos get
         for m in self.__lista_mascotas:
@@ -72,30 +84,62 @@ class sistemaV:
         return False 
         
     def verNumeroMascotas(self):  #Métodos get
-        return len(self.__lista_mascotas) 
+        can = Mascota()
+        return str(len(can.__canino)) + str(len(can.__felino))
     
-    def ingresarMascota(self,mascota):  #Métodos set 
-        self.__lista_mascotas.append(mascota) 
-   
+    def ingresarCanino(self,canino):  #Métodos set 
+        cf = Mascota()
+        cf.__canino(canino)
 
-    def verFechaIngreso(self,historia):  #Métodos get
+    def ingresarFelino(self,felino):  #Métodos set 
+        cf = Mascota()
+        cf.__felino(felino)
+
+    def verFechaIngresof(self,felino):  #Métodos get
+        cf = Mascota()
         #busco la mascota y devuelvo el atributo solicitado
-        for masc in self.__lista_mascotas:
-            if historia == masc.verHistoria():
+        for masc in cf.__felino:
+            if felino == masc.verHistoria():
+                return masc.verFecha() 
+        return None
+    
+    def verFechaIngresoc(self,canino):  #Métodos get
+        cf = Mascota()
+        #busco la mascota y devuelvo el atributo solicitado
+        for masc in cf.__canino:
+            if canino == masc.verHistoria():
                 return masc.verFecha() 
         return None
 
-    def verMedicamento(self,historia):  #Métodos get
+    def verMedicamentoc(self,canino):  #Métodos get
         #busco la mascota y devuelvo el atributo solicitado
-        for masc in self.__lista_mascotas:
-            if historia == masc.verHistoria():
-                return masc.verLista_Medicamentos() 
+        cf= Mascota()
+        for masc in cf.__canino:
+            if canino == masc.verHistoria():
+                return masc.verCanino() 
         return None
     
-    def eliminarMascota(self, historia):  #Métodos set 
-        for masc in self.__lista_mascotas:
-            if historia == masc.verHistoria():
-                self.__lista_mascotas.remove(masc)  #opcion con el pop
+    def verMedicamentof(self,felino):  #Métodos get
+        #busco la mascota y devuelvo el atributo solicitado
+        cf= Mascota()
+        for masc in cf.__felino:
+            if felino == masc.verHistoria():
+                return masc.verFelino() 
+        return None
+    
+    def eliminarMascotaf(self, felino):  #Métodos set 
+        cf= Mascota()
+        for masc in cf.__felino:
+            if felino == masc.verHistoria():
+                cf.__felino.pop(masc)  #polimorfismo 
+                return True  #eliminado con exito
+        return False 
+    
+    def eliminarMascotafc(self, canino):  #Métodos set 
+        cf= Mascota()
+        for masc in cf.__canino:
+            if canino == masc.verHistoria():
+                cf.__canino.pop(masc)  #polimorfismo 
                 return True  #eliminado con exito
         return False 
 
@@ -117,7 +161,7 @@ def main():
                 continue
             historia=int(input("Ingrese la historia clínica de la mascota: "))
             #   verificacion=servicio_hospitalario.verDatosPaciente(historia)
-            if servicio_hospitalario.verificarExiste(historia) == False:
+            if servicio_hospitalario.verificarExiste(historia) == False: #Polimorfismo 
                 nombre=input("Ingrese el nombre de la mascota: ")
                 tipo=input("Ingrese el tipo de mascota (felino o canino): ")
                 peso=int(input("Ingrese el peso de la mascota: "))
@@ -127,11 +171,14 @@ def main():
 
                 for i in range(0,nm):
                     nombre_medicamentos = input("Ingrese el nombre del medicamento: ")
-                    dosis =int(input("Ingrese la dosis: "))
-                    medicamento = Medicamento()
-                    medicamento.asignarNombre(nombre_medicamentos)
-                    medicamento.asignarDosis(dosis)
-                    lista_med.append(medicamento)
+                    if servicio_hospitalario.verificarExisteM(nombre_medicamentos):
+                        print("\n<< Ya existe un medicamento con ese nombre >>".upper())
+                    else:
+                        dosis =int(input("Ingrese la dosis: "))
+                        medicamento = Medicamento() #Herencia 
+                        medicamento.asignarNombre(nombre_medicamentos)
+                        medicamento.asignarDosis(dosis)
+                        lista_med.append(medicamento)
 
                 mas= Mascota()
                 mas.asignarNombre(nombre)
@@ -171,7 +218,7 @@ def main():
         
         elif menu == 5: # Eliminar mascota
             q = int(input("Ingrese la historia clínica de la mascota: "))
-            resultado_operacion = servicio_hospitalario.eliminarMascota(q) 
+            resultado_operacion = servicio_hospitalario.eliminarMascota(q)  #Polimorfismo 
             if resultado_operacion == True:
                 print("Mascota eliminada del sistema con exito")
             else:
