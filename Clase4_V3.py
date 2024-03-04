@@ -1,11 +1,11 @@
-class Paciente:
-    def __init__(self): #inicializador 
+class Paciente: #Clase o molde 
+    def __init__(self): #constructor 
         self.__nombre = '' 
         self.__cedula = 0 
         self.__genero = '' 
         self.__servicio = '' 
               
-    #metodos get    
+    #metodos get, permiten visualizar datos, además estas funciones retornan datos 
     def verNombre(self):
         return self.__nombre 
     def verCedula(self):
@@ -14,7 +14,7 @@ class Paciente:
         return self.__genero 
     def verServicio(self):
         return self.__servicio 
-    # metodos set
+    # metodos set, permiten modificar y/o asignar datos, estas funciones no retornan datos, solo los actualiza
     def asignarNombre(self,n):
         self.__nombre = n 
     def asignarCedula(self,c):
@@ -24,18 +24,18 @@ class Paciente:
     def asignarServicio(self,s):
         self.__servicio = s 
         
-class Sistema:    
+class Sistema:    #Clase o molde 
     def __init__(self):
-        self.__lista_pacientes = [] 
+        self.__lista_pacientes = [] #En esta lista se guardan los pacientes 
         
-    def verificarPaciente(self,cedula):
+    def verificarPaciente(self,cedula): #Se verifica que este el paciente pidiendo su documento y haciendo un ciclo 
         for p in self.__lista_pacientes:
             if cedula == p.verCedula():
                 return True 
         return False
         
     def ingresarPaciente(self,pac):
-        self.__lista_pacientes.append(pac)
+        self.__lista_pacientes.append(pac) #Se agrega el paciente a la lista 
         return True
     
     def verDatosPaciente(self, c):
@@ -53,7 +53,7 @@ def main():
     sis = Sistema() 
     #probemos lo que llevamos programado
     while True:
-        #TAREA HACER EL MENU
+        #Menú
         opcion = int(input("\nIngrese \n0 para salir, \n1 para ingresar nuevo paciente, \n2 ver Paciente\n\t--> ")) 
         
         if opcion == 1:
